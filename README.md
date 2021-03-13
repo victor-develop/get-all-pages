@@ -2,10 +2,14 @@
 [![TypeScript version][ts-badge]][typescript-4-2]
 [![Node.js version][nodejs-badge]][nodejs]
 [![APLv2][license-badge]][license]
-[![Build Status - Travis][travis-badge]][travis-ci]
 [![Build Status - GitHub Actions][gha-badge]][gha-ci]
 
-# node-typescript-boilerplate
+# get-all-pages
+
+When processing paginated data sources, it's quite annoying to write for loops again and again. So I extract a function to help you iterately retrive all your data sources. All you need is to define a function of how to retrieve next page based on previous page's result. Then 
+
+Depending on your usecases, you mostly would like a stream of data. Alternatively, you can use our underlying generator function.
+
 
 👩🏻‍💻 Developer Ready: A comprehensive template. Works out of the box for most [Node.js][nodejs] projects.
 
