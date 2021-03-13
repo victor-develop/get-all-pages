@@ -1,32 +1,33 @@
-/**
- * Some predefined delays (in milliseconds).
- */
-export enum Delays {
-  Short = 500,
-  Medium = 2000,
-  Long = 5000,
+type IterateAllPagesInput<Page, Item> = {
+  getPage: ((previousPage?: Page) => Promise<Page>) | ( (previousPage?: Page) => Page),
+  hasNextPage: ((previousPage?: Page) => Promise<boolean>) | ((previousPage?: Page) => Promise<boolean>),
+  extractDataListFromPage: ((p:Page) => Item[]) | ((p:Page) => Promise<Item[]>)
 }
 
-/**
- * Returns a Promise<string> that resolves after given time.
- *
- * @param {string} name - A name.
- * @param {number=} [delay=Delays.Medium] - Number of milliseconds to delay resolution of the Promise.
- * @returns {Promise<string>}
- */
-function delayedHello(
-  name: string,
-  delay: number = Delays.Medium,
-): Promise<string> {
-  return new Promise((resolve: (value?: string) => void) =>
-    setTimeout(() => resolve(`Hello, ${name}`), delay),
-  );
-}
+type IterateAllPagesGenerator<Page, Item> = (args: IterateAllPagesInput<Page, Item>) => (maxPages: number) => AsyncGenerator<unknown[], void, unknown>
 
-// Below are examples of using ESLint errors suppression
-// Here it is suppressing missing return type definitions for greeter function
+export const generator: IterateAllPagesGenerator<unknown, unknown>  = ({
+  getPage,
+  hasNextPage,
+  extractDataListFromPage
+}) => {
+  return async function* iterateAllPages(maxPages: number) {
+      let page;
+      for (let round = 0; round < maxPages; round++) {
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function greeter(name: string) {
-  return await delayedHello(name, Delays.Long);
+        if (round === 0) {
+          page = await getPage()
+        } else {
+          page = await getPage(page)
+        }
+
+        const dataList = await extractDataListFromPage(page)
+        yield dataList
+
+        if (!(await hasNextPage(page))) {
+          break;
+        }
+      }
+      return;
+  }
 }
