@@ -1,8 +1,15 @@
 {
   "name": "stream-all-pages",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "keywords": ["stream all pages", "get all paginated resources", "higland", "highlandjs", "stream"],
   "description": "General function to retrieve all data from a paginated data source",
+  "homepage": "https://github.com/victor-develop/stream-all-pages",
+  "repository": {
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/victor-develop/stream-all-pages"
+    }
+  },
   "devDependencies": {
     "@types/jest": "~26.0.20",
     "@types/node": "~14.14.31",
