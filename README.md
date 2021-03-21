@@ -1,5 +1,3 @@
-[![Node.js version][nodejs-badge]][nodejs]
-[![APLv2][license-badge]][license]
 
 # stream-all-pages
 
