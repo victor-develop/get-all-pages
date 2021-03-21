@@ -20,9 +20,9 @@
     "declaration": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
   ],
   "exclude": [
-    "build/**/*"
+    "src/**/__tests__/**/*",
   ]
 }
