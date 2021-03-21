@@ -5,6 +5,10 @@
 
 When processing paginated data sources, it's quite annoying to write for loops again and again. So I extract a function to help you iterately retrive all your data sources. All you need is to define a function of how to retrieve next page based on previous page's result. Then you will get a stream to consume it. (It's a more powerful stream than native node stream, i.e. [highland stream](https://caolan.github.io/highland/), but you are free to treat it as a simple node stream)
 
+# Installation
+
+`npm install stream-all-pages`
+
 # Sample Usage
 Assume that you have an API to fetch data page by page, and the page response includes information of whether next page exitsts. Then your code will look like:
 
