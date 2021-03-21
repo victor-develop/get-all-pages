@@ -3,7 +3,9 @@
 
 # stream-all-pages
 
-When processing paginated data sources, it's quite annoying to write for loops again and again. So I extract a function to help you iterately retrive all your data sources. All you need is to define a function of how to retrieve next page based on previous page's result. Then you will get a stream to consume it. (It's a more powerful stream than native node stream, i.e. [highland stream](https://caolan.github.io/highland/), but you are free to treat it as a simple node stream)
+When processing paginated data from a source, it's quite annoying to write `for` loops again and again. So I extract a function to help you iterately retrieve all your data conveniently and performantly. All you need is to define a function of how to retrieve next page based on previous page's result. Then you will get a stream to consume it. (It's a more powerful stream than native node stream, i.e. [highland stream](https://caolan.github.io/highland/), but you are free to treat it as a simple node stream)
+
+Since this is a lazy stream, you can consume the data only as much as you need, and process the values without buffering too much stuff in memory.
 
 # Installation
 
