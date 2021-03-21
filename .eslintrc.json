@@ -17,5 +17,8 @@
     "plugin:jest/recommended",
     "prettier"
   ],
+  "ignorePatterns": [
+    "build/**/*"
+  ],
   "rules": {}
 }

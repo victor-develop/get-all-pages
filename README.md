@@ -8,22 +8,33 @@ When processing paginated data sources, it's quite annoying to write for loops a
 # Sample Usage
 Assume that you have an API to fetch data page by page, and the page response includes information of whether next page exitsts. Then your code will look like:
 
+## Preapre the stream
+
 ```ts
     // you define how to retrieve a page, previous page will be supplied as the function argument after 1st-page call
-    stream({
+const allPages = stream({
         getPage: async (previousPage = null) => {
             return fetch(`your/data/source?page=${previousPage.page + 1}`)
         },
         hasNextPage: async (previousPage) => previousPage.has_next,
         extractDataListFromPage: async (page) => page.data
     })
-    .flatten()
-    // Use toArray when it's okay to buffer the data in memory. Use .pipe(somewhereElse) instead for stream processing if the data is HUGE
-    .toArray((arr) => {
-        console.log(arr)
-    })
-
 ```
+
+## Get a flattened list
+```ts
+// Use toArray when it's okay to buffer the data in memory. Use .pipe(somewhereElse) instead for stream processing if the data is HUGE
+allPages.flatten().toArray((arr) => {console.log(arr)})
+```
+
+## Take only first few elements regardless of pages
+```ts
+// Use toArray when it's okay to buffer the data in memory. Use .pipe(somewhereElse) instead for stream processing if the data is HUGE
+allPages.flatten().take(5).toArray((arr) => {console.log(arr)})
+```
+
+There are still many convenient ways to consumes the stream, which you can reference from [here](https://caolan.github.io/highland/#flatMap)
+
 ## License
 
 Licensed under the APLv2. See the [LICENSE](https://github.com/jsynowiec/node-typescript-boilerplate/blob/main/LICENSE) file for details.

@@ -1,13 +1,13 @@
 'use strict'
 
-const { stream } = require("../main")
+const { streamAllPages } = require("../main")
 
 describe('stream', () => {
     test('works as expected', () => {
         const getPage = async ([a, b] = [0, 0]) => {
             return [a + 1, b + 3]
         }
-        stream({
+        streamAllPages({
             getPage,
             hasNextPage: async ([x, y]) => (x + y < 10),
             extractDataListFromPage: async (x) => x

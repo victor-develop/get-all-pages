@@ -1,10 +1,7 @@
 {
-  "name": "get-all-pages",
-  "version": "0.0.1",
+  "name": "stream-all-pages",
+  "version": "1.2.2",
   "description": "General function to retrieve all data from a paginated data source",
-  "engines": {
-    "node": ">= 14.16 <15"
-  },
   "devDependencies": {
     "@types/jest": "~26.0.20",
     "@types/node": "~14.14.31",
@@ -30,7 +27,7 @@
     "test:watch": "jest --watch",
     "prepublish": "npm run lint && npm run build"
   },
-  "author": "Jakub Synowiec <github@jakubsynowiec.info>",
+  "author": "Victor Zhou",
   "license": "Apache-2.0",
   "dependencies": {
     "@types/highland": "^2.12.12",
