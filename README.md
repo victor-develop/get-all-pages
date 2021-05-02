@@ -32,10 +32,13 @@ allPages.flatten().toArray((arr) => {console.log(arr)})
 ```
 
 ## Take only first few elements regardless of pages
+You can use `take(n)` to specify the max number of pages retrieved to avoid infinite loop. And don't worry, if `n` is larger than the actual number of pages it can have, it will smartly return as many pages as it can be successfully.
 ```ts
 // Use toArray when it's okay to buffer the data in memory. Use .pipe(somewhereElse) instead for stream processing if the data is HUGE
 allPages.flatten().take(5).toArray((arr) => {console.log(arr)})
 ```
+
+A warm reminder, do not use `toArray()` but please use `.pipe(nextStream)` if the list is large and memory consuming.
 
 There are still many convenient ways to consumes the stream, which you can reference from [here](https://caolan.github.io/highland/#flatMap)
 
