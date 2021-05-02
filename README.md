@@ -21,7 +21,9 @@ const allPages = stream({
             return fetch(`your/data/source?page=${previousPage.page + 1}`)
         },
         hasNextPage: async (previousPage) => previousPage.has_next,
-        extractDataListFromPage: async (page) => page.data
+        extractDataListFromPage: async (page) => page.data,
+        // this is optional. But you can give a safeguard number to make sure the getPage won't be called more than certain times. You likely want to use it if getPage is a heavy operation
+        maxNumberOfPages: 100
     })
 ```
 

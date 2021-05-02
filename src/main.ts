@@ -30,9 +30,37 @@ export const generator = <Page extends unknown, Item extends unknown> ({getPage,
   }
 }
 
+export const generatorWithMaxPageLimit = <Page extends unknown, Item extends unknown> ({getPage, hasNextPage, extractDataListFromPage, maxNumberOfPages}: IterateAllPagesInput<Page, Item> & {maxNumberOfPages?: number}): ReturnType<typeof generator> => {
+  if (maxNumberOfPages < 1) {
+    throw new Error('maxNumberOfPages cannot be less than 1')
+  }
+  let retrievedPages = 0
+  function getPageCountPage(...args: Parameters<typeof getPage>) : ReturnType<typeof getPage> {
+    return getPage(...args).then(p => {
+      retrievedPages++;
+      return p
+    })
+  }
+  async function shouldGetNextPage(...args: Parameters<typeof hasNextPage>): ReturnType<typeof hasNextPage> {
+    if (maxNumberOfPages !== undefined && retrievedPages >= maxNumberOfPages) {
+      return false
+    }
+    return hasNextPage(...args)
+  }
+  return generator(
+    {
+      getPage: getPageCountPage,
+      hasNextPage: shouldGetNextPage,
+      extractDataListFromPage
+    }
+  )
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const streamAllPages = (args: IterateAllPagesInput<unknown, unknown>) => {
+export const streamAllPages = (args: IterateAllPagesInput<unknown, unknown> & {
+  maxNumberOfPages?: number
+}) => {
   return highland(
-    generator(args)
+    generatorWithMaxPageLimit(args)
   )
 }
