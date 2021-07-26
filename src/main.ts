@@ -56,10 +56,9 @@ export const generatorWithMaxPageLimit = <Page extends unknown, Item extends unk
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const streamAllPages = (args: IterateAllPagesInput<unknown, unknown> & {
-  maxNumberOfPages?: number
-}) => {
+export function streamAllPages<Page, Item> (args: IterateAllPagesInput<Page, Item> & {
+  maxNumberOfPages?: number;
+}): Highland.Stream<Item> {
   return highland(
     generatorWithMaxPageLimit(args)
   )
